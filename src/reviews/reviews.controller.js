@@ -15,6 +15,11 @@ async function destroy(req, res) {
     res.sendStatus(204);
 }
 
+// function read(req, res) {
+//     res.json({data: res.locals.review})
+// }
+
 module.exports = {
-    delete: [asyncErrorBoundary(reviewExists), asyncErrorBoundary(destroy)]
+    delete: [asyncErrorBoundary(reviewExists), asyncErrorBoundary(destroy)],
+  //  read: [asyncErrorBoundary(reviewExists), read]
 }
