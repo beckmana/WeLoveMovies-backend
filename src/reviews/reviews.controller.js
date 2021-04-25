@@ -15,11 +15,18 @@ async function destroy(req, res) {
     res.sendStatus(204);
 }
 
-// function read(req, res) {
-//     res.json({data: res.locals.review})
-// }
+async function update(req, res) {
+    const updatedReview = {
+        ...res.locals.review,
+        ...req.body.data,
+        review_id: res.locals.review.review_id,
+    }
+    await service.update(updatedReview);
+    updatedReview.critic = await service.listCritics(updatedReview.critic_id);
+    res.json({data: updatedReview})
+}
 
 module.exports = {
+    update: [asyncErrorBoundary(reviewExists), asyncErrorBoundary(update)],
     delete: [asyncErrorBoundary(reviewExists), asyncErrorBoundary(destroy)],
-  //  read: [asyncErrorBoundary(reviewExists), read]
 }
